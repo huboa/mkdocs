@@ -1,21 +1,16 @@
-# Welcome to MkDocs
+# 首页
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+## 简介
+所有部署文档通过 [docker-compose](docker-compose.md) 技术部署,原则是极简部署
 
-## Commands
+## 名词解释
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+[docker](docker.md)
+[docker-compose](docker-compose.md)
 
-## Project layout
+## 参考文档
+[七月的文档](https://github.com/huboa/wiki/tree/master/docs)
 
-
-
-    mkdocs.yml    # The configuration file.
-    
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## 关于
+[本文档地址]()
 
