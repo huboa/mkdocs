@@ -1,58 +1,62 @@
 # Docker
 
 ## Docker Engine概述 ：
-预计阅读时间： 1分钟
 
-Docker Engine是一种开源容器化技术，用于构建和容器化您的应用程序。
+Docker Engine是一种开源容器化技术，用于构建和容器化应用程序。
 
-Docker Engine通过以下方式充当客户端-服务器应用程序（CS 架构）：
-* 具有长时间运行的守护进程的服务器dockerd。
-* API，用于指定程序可以用来与Docker守护程序进行对话和指示的接口。
-* 命令行界面（CLI）客户端docker。
-CLI使用Docker API通过脚本或直接CLI命令控制或与Docker守护程序进行交互。许多其他Docker应用程序都使用基础API和CLI。守护程序创建和管理Docker对象，例如映像，容器，网络和卷。
+Docker Engine 通过以下方式充当客户端-服务器应用程序（CS 架构）：
 
-产品手册 https://docs.docker.com/engine/
+* 守护进程 dockerd 服务
+* [API接口](https://docs.docker.com/engine/api/) 
+* docker 客户端（CLI）
 
-## docker搜索热度曲线
-![alt ](./files/docker-trend.png)
+>docker 客户端 (CLI) 使用API与Docker守护程序进行交互。
+>守护程序创建和管理Docker对象，例如映像，容器，网络和卷。
+
+[产品手册](https://docs.docker.com/engine/)
+
+### docker 及相关搜索热度
+![alt ](../static/docker-trend.png)
 
 ### 版本介绍
-* 目前docker 分为 社区版和商业版。我们目前常用的社区版。
+* 目前docker 分为 社区版和商业版。我们目前常用的是社区版。
 * 目前最新发行版本为 version 19.03.12,前两位代表年月，最后一位代表补丁版本。
 * 版本号与分支对应。
 
 ### 发行说明：
 现在，可以在单独的发行说明页面上找到当前系列中每个发行版的更改摘要。
-https://docs.docker.com/engine/release-notes/
+
+[发行版本](https://docs.docker.com/engine/release-notes/)
 
 ### 安装指南：
-* 该安装部分向您展示如何在各种平台上安装docker。
-* 桌面系统支持macOS,window10.
-* 服务器系统OS支持linux . 我们目前采用了 centos
-![avatar](./files/docker-in-pic.png)
-详细: https://docs.docker.com/engine/install/
+* 支持各种linux服务器系统。
+* 支持macOS,window10桌面系统.
+* 支持二进制安装 
+
+![avatar](../static/docker-in-pic.png)
 
 
-## centos7 安装docker,并运行一个简单的web server
-### 安装docker yum 源
+## 安装docker
+>[官方安装文档](https://docs.docker.com/engine/install/)
+### 安装yum 源
+    yum install -y yum-utils device-mapper-persistent-data
+    yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+>使用 centos 系统
+
+### 安装
+    yum list docker-ce --showduplicates | sort -r
+    yum install docker-ce-18.09.3
+    yum list installed | grep docker
+>安装版本18.09.3
+
+### 启动
+    systemctl restart docker
+    systemctl enable docker
+>开机自启动
+### 查看版本
+    docker version
+
 ```
- yum install -y yum-utils device-mapper-persistent-data
- yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-```
-### 安装docker 18.09.3
-```
-yum list docker-ce --showduplicates | sort -r
-yum install docker-ce-18.09.3
-yum list installed | grep docker
-```
-### 启动docker 
-```
-systemctl restart docker
-systemctl enable docker
-```
-### 查看docker 信息及版本
-```
-[root@docker-build data]# docker version
 Client:
  Version:           18.09.3
  API version:       1.39
@@ -80,7 +84,11 @@ Server: Docker Engine - Community
  docker-init:
   Version:          0.18.0
   GitCommit:        fec3683
-[root@docker-build data]# docker info
+```
+### 查看信息
+    docker info
+```
+docker info
 Containers: 16
  Running: 16
  Paused: 0
@@ -128,8 +136,8 @@ Registry Mirrors:
 Live Restore Enabled: false
 ```
 
-###   配置修改docker服务
-##### 创建修改配置文件
+###   配置修改dockerd服务
+
 ```
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
@@ -141,9 +149,13 @@ EOF
 sudo systemctl daemon-reload 
 sudo systemctl restart docker
 ```
+>配置为阿里镜像服务地址，
+>驱动systemd，
+>更改存储目录 /data/docker。
+[官方参数](https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option)
 
-### 运行第一个容器
-##### 启动一个容器
+## 运行一个简单的web server
+### 启动一个容器
 ```
 [root@localhost data]# docker run  -d -p 8001:80 nginx
 Unable to find image 'nginx:latest' locally
@@ -157,7 +169,7 @@ Digest: sha256:b0ad43f7ee5edbc0effbc14645ae7055e21bc1973aee5150745632a24a752661
 Status: Downloaded newer image for nginx:latest
 ddd422865238ceedd1928542721af6314f5f0763183f4de527b4b038fe1b93b0
 ```
-##### 访问容器
+### 访问容器
 ```
 [root@localhost data]# curl 127.0.0.1:8001
 <!DOCTYPE html>
@@ -186,11 +198,10 @@ Commercial support is available at
 </body>
 </html>
 
-
 ```
 
-#### 参考：
-Docker官网： https://docs.docker.com/
+#### 参考文献：
+[Docker官网](https://docs.docker.com/) 
 
 
 
