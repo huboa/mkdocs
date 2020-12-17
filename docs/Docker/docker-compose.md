@@ -34,10 +34,10 @@
 
 ### 查看容器状态
     cd /data/ && docker-compose ps
-
 ```   
 Name               Command               State         Ports
 -------------------------------------------------------------------
 nginx   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:80->80/tcp
 ``` 
 >运行结果
+
