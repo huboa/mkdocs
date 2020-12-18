@@ -9,31 +9,36 @@
 
 ### 配置
 ####  docker-compose.yml
-    sudo tee /data/docker-compose.yml <<EOF
-    version: "3"
-    services:
-      mysql01:
-        container_name: "mysql01"
-        restart: always
-        volumes:
-          - /data/mysql01/data:/var/lib/mysql
-          - /data/mysql01/conf/my.cnf:/etc/my.cnf
-        image: mysql:5.7
-        environment:
-          - MYSQL_ROOT_PASSWORD=123.com
-          - TZ=Asia/Shanghai
-        ports:
-          - "3306:3306"
-    EOF
+```
+sudo mkdir /data
+sudo tee /data/docker-compose.yml <<EOF
+version: "3"
+services:
+  mysql01:
+    container_name: "mysql01"
+    restart: always
+    volumes:
+      - /data/mysql01/data:/var/lib/mysql
+      - /data/mysql01/conf/my.cnf:/etc/my.cnf
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=123.com
+      - TZ=Asia/Shanghai
+    ports:
+      - "3306:3306"
+EOF 
+```
 ####  my.cnf
-    sudo mkdir -p /data/mysql01/{conf,data}
-    sudo tee /data/mysql01/conf/my.cnf <<EOF
-    [client]
-    [mysqld]
-    port = 3306   #设置3306端口
-    datadir=/var/lib/mysql  # 数据的存放目录 
-    [mysqldump]
-    EOF
+```
+sudo mkdir -p /data/mysql01/{conf,data}
+sudo tee /data/mysql01/conf/my.cnf <<EOF
+[client]
+[mysqld]
+port = 3306   #设置3306端口
+datadir=/var/lib/mysql  # 数据的存放目录 
+[mysqldump]
+EOF
+``` 
 > 最简配置 部署
 > 定制配置 直接修改my.cnf 启动
 
@@ -70,6 +75,7 @@
 <details>
 <summary>点击查看</summary>  
 <pre><code>
+```
     [client]
     user = root
     host = localhost
