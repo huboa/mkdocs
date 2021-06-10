@@ -1,4 +1,4 @@
-# openvpn server
+# openvpn-server
 ## 官方参考文档
     https://github.com/kylemanna/docker-openvpn/blob/master/docs/docker-compose.md
     https://github.com/kylemanna/docker-openvpn
@@ -95,22 +95,96 @@ ip 列表
     [221,222] [225,226] [229,230] [233,234] [237,238]
     [241,242] [245,246] [249,250] [253,254]
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
-## Commands
+创建静态ip 文件
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+     sudo tee -a ./ccd/username <<-'EOF'        
+        ifconfig-push 192.168.255.113 192.168.255.114     
+     EOF      
+        
+> 进入配置文件openvpn.conf 同级目录。
+>  创建 username 。
+>  选取113、114 一对
+>  ip 网段192.168.255.0 需要和创建时的一致，此处是默认 。
+   
 
-## Project layout
+### 客户端配置文件（重要！！！ 服务器启动vpn客户端需要仔细检查,防止断网无法连接服务器）
 
-
-
-    mkdocs.yml    # The configuration file.
+默认生成的配置文件
+ 
+    client    
+    nobind
+    dev tun
+    remote-cert-tls server
+    remote vpn01.localhost.com 1194 tcp
     
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+    <key>
+    -----BEGIN PRIVATE KEY----- 
+    -----END PRIVATE KEY-----
+    </key>
+    
+    <cert>
+    -----BEGIN CERTIFICATE-----
+    -----END CERTIFICATE-----
+    </cert>
+    
+    <ca>
+    -----BEGIN CERTIFICATE-----
+    -----END CERTIFICATE-----
+    </ca>
+    
+    key-direction 1
+    
+    <tls-auth>
+    -----BEGIN OpenVPN Static key V1-----
+    -----END OpenVPN Static key V1-----
+    </tls-auth>
+    
+    redirect-gateway def1 
 
+修改配置参数
+ 
+    #修改为服务器地址信息服务器 地址及端口
+    remote vpn01.localhost.com 1194 tcp  
+    # 客户端默认是全路由，服务器需要注掉
+    # redirect-gateway def1 
+    ##配置客户端路由
+    route 111.132.63.0 255.255.255.0 vpn_gateway  
+    
+## 客户端启动（openvpn-client-linux-centos）
+
+启动Client端 openvpn 命令通过supervisor 守护
+
+1、安装openvpn 客户端：
+
+    yum -y install openvpn
+2、 复制配置文件
+    准备好的username.ovpn 文件拷贝到/etc/openvpn/client目录下
+    
+    ls /etc/openvpn/client/username.ovpn 
+
+3、安装supervisor守护进程，方便管理：
+    
+    yum install supervisor -y
+    systemctl restart supervisord
+    systemctl enable supervisord 
+    
+    cat /etc/supervisord.d/ovpn.ini < EOF
+    [program:openvpn]
+    startsecs = 1
+    autostart=true
+    autorestart=true
+    command=/usr/sbin/openvpn --config /etc/openvpn/client/username.ovpn
+    EOF
+5  启动服务器客户端 ！！！（启动时检查客户端路由，有可能连不上网 ）
+
+    supervisorctl start openvpn
+    supervisorctl stop openvpn
+    supervisorctl status openvpn
+
+4、可根据虚拟网卡tun、网关等信息判断是否连接成功： 
+
+    route -n
+ 
+ 
+ 
