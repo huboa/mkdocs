@@ -27,9 +27,10 @@
     plugin /usr/lib/openvpn/plugins/openvpn-auth-ldap.so  "/etc/openvpn/ldap.conf cn=%u"
     EOF
 
-### 启动服务参考readme.md
-### 创建用户参考readme.md
-
+### 启动服务参考 
+[vpn 服务安装](./openvpn-server.md)
+### 创建用户参考 openvpn-server
+[vpn 服务安装](./openvpn-server.md)
 ## 客户端配置
 下载 创建好的配置文件.
 创建完证书用户后需要检查下列参数，不存在需要添加
