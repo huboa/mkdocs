@@ -142,7 +142,11 @@ Live Restore Enabled: false
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
 { "registry-mirrors": ["https://i3khnsz8.mirror.aliyuncs.com"],
-"exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "10m",
+    "max-file": "3" 
+  }
 "data-root": "/data/docker" }
 EOF
 
