@@ -147,7 +147,7 @@ sudo tee /etc/docker/daemon.json <<-'EOF'
     "max-size": "10m",
     "max-file": "3" 
   }
-"data-root": "/data/docker" }
+"data-root": "/data/docker-root" }
 EOF
 
 sudo systemctl daemon-reload 
