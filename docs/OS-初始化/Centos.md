@@ -1,8 +1,13 @@
 # CentOS
-## 安装命令
-    yum install lrzsz net-tools vim repe-release yum-utils 
 
-## docker
+### 安装命令
+    yum install lrzsz net-tools vim repe-release yum-utils bash-completion  wget tree  ntpdate -y
+###时间同步
+    sudo tee /etc/crontab <<EOF
+    */10 * * * * root /usr/sbin/ntpdate ntp1.aliyun.com >/dev/null  2>&1
+    EOF
+
+### docker
     yum device-mapper-persistent-data
     yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
     yum install docker
@@ -52,3 +57,6 @@
     fs.file-max = 6815744
     net.netfilter.nf_conntrack_max = 2621440
     EOF
+
+
+
