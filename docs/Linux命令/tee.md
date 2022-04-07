@@ -2,7 +2,7 @@
 
 ## 追加新建文件
 ### 单行
-    echo 内容 |sudo tee  /data/logs.txt
+    echo 内容 |sudo tee /data/logs.txt
 > 普通用户可以追加日志
 ### json
     sudo tee /etc/docker/daemon.json <<EOF
