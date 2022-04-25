@@ -1,7 +1,14 @@
 # CentOS
-
+### 关闭防火墙 selinux 
+    systemctl stop firewalld
+    systemctl disable firewalld
+    setenforce 0
+    sed  -i  's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+### yum 源
+    rpm -ivh http://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm
+    yum install epel-release
 ### 安装命令
-    yum install telnet mtr lrzsz net-tools vim epel-release yum-utils bash-completion  wget tree  ntpdate -y
+    yum install telnet mtr lrzsz net-tools vim  yum-utils bash-completion  wget tree  ntpdate -y
 ###时间同步
     sudo tee -a /etc/crontab <<EOF
     */10 * * * * root /usr/sbin/ntpdate ntp1.aliyun.com >/dev/null  2>&1

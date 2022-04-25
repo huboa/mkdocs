@@ -1,5 +1,5 @@
 # kubelet
-## node 安装
+## 节点初始化
 ### 有旧服务需重置
     kubeadm reset
     systemctl stop kubelet
@@ -31,7 +31,7 @@
     sudo chmod 755 /etc/sysconfig/modules/ipvs.modules
     sudo bash /etc/sysconfig/modules/ipvs.modules 
     sudo lsmod | grep -e ip_vs -e nf_conntrack_ipv4
-    sudo yum install ipset  ipvsadm -y
+    sudo yum install ipset ipvsadm -y
 
 ### 安装kubelet
     sudo tee /etc/yum.repos.d/kubernetes.repo<<-'EOF'
@@ -54,7 +54,22 @@
     tee -a /etc/hosts<<-'EOF'
     192.168.100.101    apiserver-dev.kubelet.com
     EOF
-### 获取 主节点token 
+
+## master 安装
+
+## 
+## 添加控制节点
+
+### 获取token 命令
+    获取--certificate-key 
+    echo $(kubeadm token create --print-join-command)  --control-plane --certificate-key $(sudo kubeadm init phase upload-certs --upload-certs|tail -1)
+
+
+
+### 获取
+## node 安装
+
+### 获取 主节点token 命令
     kubeadm token create --print-join-command
     kubeadm join apiserver-dev.kubelet.com:6443 --token gogyf0.token --discovery-token-ca-cert-hash sha256:token
     
@@ -64,3 +79,4 @@
 ###  修改节点 pod 上限
     grep maxPods /var/lib/kubelet/config.yaml
     maxPods: 200
+

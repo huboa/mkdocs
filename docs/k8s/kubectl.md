@@ -1,7 +1,9 @@
-# CentOS
+# 集群管理
 ## 标签
     kubectl label  node   hostname  netenv=outside
-    
+##  固定命名空间到某台主机
+    kubectl label  node zcb-qas-k8s-node182  uat02-key-zone=uat02    
+    kubectl label  node zcb-qas-k8s-node182  uat03-key-zone=uat03    
 
 ## docker
     yum device-mapper-persistent-data
