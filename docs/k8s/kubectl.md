@@ -4,7 +4,9 @@
 ##  固定命名空间到某台主机
     kubectl label  node zcb-qas-k8s-node182  uat02-key-zone=uat02    
     kubectl label  node zcb-qas-k8s-node182  uat03-key-zone=uat03    
-
+##  污点标识
+     kubectl taint nodes zcb-dev-k8s-node111 key1=value1:NoSchedule
+     kubectl taint node zcb-dev-k8s-node111 node-role.kubernetes.io/master-
 ## docker
     yum device-mapper-persistent-data
     yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
