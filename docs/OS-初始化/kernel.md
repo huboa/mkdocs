@@ -17,6 +17,8 @@
     fs.file-max = 6815744
     #防火墙跟踪表的大小。注意：如果防火墙没开则会提示error: "net.netfilter.nf_conntrack_max" is an unknown key，忽略即可
     net.netfilter.nf_conntrack_max = 2621440
+    ##
+    fs.aio-max-nr=1065535
 
 ## 最大进程数
     查看最大进程数 
@@ -27,7 +29,7 @@
     
     快速更改进程数
     echo 1000000 > /proc/sys/kernel/pid_max
-    
+    echo "kernel.pid_max=1000000 " >> /etc/sysctl.conf
     永久配置
     echo "kernel.pid_max=1000000 " >> /etc/sysctl.conf
     sysctl -p

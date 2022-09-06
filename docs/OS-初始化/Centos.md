@@ -9,7 +9,7 @@
     yum install epel-release
 ### 安装命令
     yum install telnet mtr lrzsz net-tools vim  yum-utils bash-completion  wget tree  ntpdate -y
-###时间同步
+### 时间同步
     sudo tee -a /etc/crontab <<EOF
     */10 * * * * root /usr/sbin/ntpdate ntp1.aliyun.com >/dev/null  2>&1
     10 2  * * * root  docker system prune -f  >/dev/null 2>&1
