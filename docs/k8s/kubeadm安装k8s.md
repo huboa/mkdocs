@@ -64,8 +64,6 @@
     获取--certificate-key 
     echo $(kubeadm token create --print-join-command)  --control-plane --certificate-key $(sudo kubeadm init phase upload-certs --upload-certs|tail -1)
 
-
-
 ### 获取
 ## node 安装
 
