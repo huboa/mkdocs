@@ -234,7 +234,7 @@ EOF
 
 ## 库
 ### 新建
-    create database qiyue ;
+    CREATE DATABASE yearning_pro CHARACTER SET utf8 COLLATE utf8_general_ci;
     show create database qiyue;
 >新建名称为 qiyue  的数据库,查询sql语句
 ### 查看
@@ -254,4 +254,7 @@ EOF
 ### 查看当执行的语句
     show processlist;
 > 查找问题
+> 
+### 创建账号
+    grant all on *.* to 'yearning_pro'@'%' identified by 'QJQIqHQJQIqDFEDFH';
 
